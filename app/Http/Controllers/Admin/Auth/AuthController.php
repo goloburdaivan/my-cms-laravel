@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Auth;
 
-use App\Http\Controllers\Core\BaseAuthController;
+use App\Core\BaseAuthController;
 use App\Services\AdminAuthService;
 
 readonly class AuthController extends BaseAuthController

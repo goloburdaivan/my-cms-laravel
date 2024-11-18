@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\User\Auth;
 
-use App\Http\Controllers\Core\BaseAuthController;
+use App\Core\BaseAuthController;
 use App\Services\UserAuthService;
 
 readonly class AuthController extends BaseAuthController

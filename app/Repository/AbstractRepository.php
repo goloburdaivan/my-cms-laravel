@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 abstract class AbstractRepository
 {
@@ -14,8 +16,9 @@ abstract class AbstractRepository
         return $this->update($model, $data);
     }
 
-    public function update(Model $model, array $data): Model
+    public function update(int $id, array $data): Model
     {
+        $model = $this->find($id);
         $model->fill($data);
 
         if (!$model->save()) {
@@ -28,11 +31,6 @@ abstract class AbstractRepository
     public function delete(int $id): bool
     {
         $model = $this->find($id);
-
-        if (!$model) {
-            return false;
-        }
-
         return $model->delete();
     }
 
@@ -40,8 +38,45 @@ abstract class AbstractRepository
     {
         $modelName = $this->model();
 
-        return $modelName::query()->find($id);
+        return $modelName::query()->findOrFail($id);
     }
 
     abstract public function model(): string;
+
+    public function filter(Request $request): Builder
+    {
+        $modelName = $this->model();
+        $model = new $modelName();
+        $query = $model->newQuery();
+
+        if (method_exists($model, 'filters')) {
+            $filters = $model->filters();
+
+            foreach ($filters as $requestField => $filterConfig) {
+                if ($request->has($requestField)) {
+                    $value = $request->input($requestField);
+                    $queryField = $filterConfig['query_field'];
+                    $operator = $filterConfig['operator'];
+
+                    $this->applyFilter($query, $queryField, $operator, $value);
+                }
+            }
+        }
+
+        return $query;
+    }
+
+    protected function applyFilter(Builder $query, string $field, string $operator, $value): void
+    {
+        if (!empty($value)) {
+            if (str_contains($field, '.')) {
+                [$relation, $relationField] = explode('.', $field);
+                $query->whereHas($relation, function ($q) use ($relationField, $operator, $value) {
+                    $q->where($relationField, $operator, $operator === 'like' ? "%$value%" : $value);
+                });
+            } else {
+                $query->where($field, $operator, $operator === 'like' ? "%$value%" : $value);
+            }
+        }
+    }
 }
