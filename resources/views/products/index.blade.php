@@ -1,43 +1,48 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Products</h1>
+    <h1>Продукты</h1>
 
     <form method="GET" action="{{ route('admin.products.index') }}" class="mb-4">
-        <div>
-            <label for="name">Product Name:</label>
-            <input type="text" id="name" name="name" value="{{ request('name') }}" placeholder="Search by name">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="name" class="form-label">Название продукта:</label>
+                <input type="text" id="name" name="name" value="{{ request('name') }}" placeholder="Поиск по названию" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="article" class="form-label">Артикул:</label>
+                <input type="text" id="article" name="article" value="{{ request('article') }}" placeholder="Поиск по артикулу" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="category_name" class="form-label">Категория:</label>
+                <select id="category_name" name="category_id" class="form-select">
+                    <option value="">Все категории</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
         </div>
-        <div>
-            <label for="article">Article:</label>
-            <input type="text" id="article" name="article" value="{{ request('article') }}" placeholder="Search by article">
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">Фильтровать</button>
+            <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">Сбросить</a>
         </div>
-        <div>
-            <label for="category_name">Category:</label>
-            <select id="category_name" name="category_id">
-                <option value="">All Categories</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                        {{ $category->name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        <button type="submit">Filter</button>
     </form>
 
-    <a href="{{ route('admin.products.create') }}" class="btn btn-primary">Create New Product</a>
+    <a href="{{ route('admin.products.create') }}" class="btn btn-success mb-3">Создать новый продукт</a>
 
     @if ($items->count())
-        <table>
-            <thead>
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Category</th>
-                <th>Actions</th>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Цена</th>
+                <th>Категория</th>
+                <th>Действия</th>
             </tr>
             </thead>
             <tbody>
@@ -47,14 +52,14 @@
                     <td>{{ $product->name }}</td>
                     <td>{{ Str::limit($product->description, 50) }}</td>
                     <td>{{ $product->price }}</td>
-                    <td>{{ $product->category->name ?? 'No category' }}</td>
+                    <td>{{ $product->category->name ?? 'Без категории' }}</td>
                     <td>
-                        <a href="{{ route('admin.products.show', $product->id) }}">View</a>
-                        <a href="{{ route('admin.products.edit', $product->id) }}">Edit</a>
-                        <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('admin.products.show', $product->id) }}" class="btn btn-info btn-sm">Просмотр</a>
+                        <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-warning btn-sm">Редактировать</a>
+                        <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены?')">Удалить</button>
                         </form>
                     </td>
                 </tr>
@@ -62,8 +67,10 @@
             </tbody>
         </table>
 
-        {{ $items->links() }}
+        <div class="d-flex justify-content-center">
+            {{ $items->links() }}
+        </div>
     @else
-        <p>No products found.</p>
+        <p>Продукты не найдены.</p>
     @endif
 @endsection

@@ -24,9 +24,9 @@ abstract class AbstractAuthService
         ]);
     }
 
-    public function logout(): bool
+    public function logout(): void
     {
-        return Auth::guard($this->guard())->logout();
+        Auth::guard($this->guard())->logout();
     }
 
     public function register(array $userData): Authenticatable

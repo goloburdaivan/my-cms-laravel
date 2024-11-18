@@ -1,41 +1,77 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Create Product</h1>
+    <h1>Создать продукт</h1>
 
     <form method="POST" action="{{ route('admin.products.store') }}">
         @csrf
-        <div>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" value="{{ old('name') }}" required>
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <strong>Возникли ошибки при заполнении формы:</strong>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Название:</label>
+            <input type="text" id="name" name="name" value="{{ old('name') }}" required class="form-control @error('name') is-invalid @enderror">
+            @error('name')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
-        <div>
-            <label for="description">Description:</label>
-            <textarea id="description" name="description">{{ old('description') }}</textarea>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Описание:</label>
+            <textarea id="description" name="description" class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
+            @error('description')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
-        <div>
-            <label for="price">Price:</label>
-            <input type="number" id="price" name="price" value="{{ old('price') }}" step="0.01" required>
+
+        <div class="mb-3">
+            <label for="price" class="form-label">Цена:</label>
+            <input type="number" id="price" name="price" value="{{ old('price') }}" step="0.01" required class="form-control @error('price') is-invalid @enderror">
+            @error('price')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
-        <div>
-            <label for="slug">Slug:</label>
-            <input type="text" id="slug" name="slug" value="{{ old('slug') }}">
+
+        <div class="mb-3">
+            <label for="slug" class="form-label">Слаг:</label>
+            <input type="text" id="slug" name="slug" value="{{ old('slug') }}" class="form-control @error('slug') is-invalid @enderror">
+            @error('slug')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
-        <div>
-            <label for="category_id">Category:</label>
-            <select id="category_id" name="category_id">
-                <option value="">Select a category</option>
+
+        <div class="mb-3">
+            <label for="category_id" class="form-label">Категория:</label>
+            <select id="category_id" name="category_id" class="form-select @error('category_id') is-invalid @enderror">
+                <option value="">Выберите категорию</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
                         {{ $category->name }}
                     </option>
                 @endforeach
             </select>
+            @error('category_id')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
-        <div>
-            <label for="article">Article:</label>
-            <input type="text" id="article" name="article" value="{{ old('article') }}">
+
+        <div class="mb-3">
+            <label for="article" class="form-label">Артикул:</label>
+            <input type="text" id="article" name="article" value="{{ old('article') }}" class="form-control @error('article') is-invalid @enderror">
+            @error('article')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
-        <button type="submit">Create</button>
+
+        <button type="submit" class="btn btn-primary">Создать</button>
     </form>
 @endsection

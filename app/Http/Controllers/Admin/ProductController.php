@@ -3,17 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Core\AbstractCRUDController;
+use App\Http\Requests\Admin\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Repository\ProductRepository;
 
 class ProductController extends AbstractCRUDController
 {
+    protected string $viewFolder = 'products';
+    protected string $request = ProductRequest::class;
+
     public function __construct(
         private readonly ProductRepository $repository,
     ) {
         $this->modelClass = new Product();
-        $this->viewFolder = 'products';
         parent::__construct($repository);
     }
 

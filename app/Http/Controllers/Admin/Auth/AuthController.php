@@ -25,7 +25,7 @@ readonly class AuthController extends BaseAuthController
 
     protected function getRedirectRouteAfterLogin(): string
     {
-        return 'admin.home';
+        return 'admin.dashboard';
     }
 
     protected function getRedirectRouteAfterRegister(): string

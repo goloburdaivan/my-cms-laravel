@@ -12,8 +12,10 @@ abstract class AbstractRepository
     {
         $modelName = $this->model();
         $model = new $modelName();
+        $model->fill($data);
+        $model->save();
 
-        return $this->update($model, $data);
+        return $model;
     }
 
     public function update(int $id, array $data): Model
