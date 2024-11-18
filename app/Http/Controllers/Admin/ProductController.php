@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Core\AbstractCRUDController;
 use App\Http\Requests\Admin\ProductRequest;
+use App\Http\Requests\Admin\UpdateProductAttributesRequest;
+use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
 use App\Repository\ProductRepository;
+use Illuminate\Http\RedirectResponse;
 
 class ProductController extends AbstractCRUDController
 {
@@ -29,11 +32,20 @@ class ProductController extends AbstractCRUDController
 
     public function editViewData(): array
     {
-        return $this->createViewData();
+        return array_merge($this->createViewData(), [
+            'attributes' => Attribute::all(),
+        ]);
     }
 
     public function indexViewData(): array
     {
         return $this->createViewData();
+    }
+
+    public function updateAttributes(int $id, UpdateProductAttributesRequest $request): RedirectResponse
+    {
+        $data = $request->validated();
+        $this->repository->updateAttributes($id, $data['attributes']);
+        return redirect()->route('admin.products.edit', $id);
     }
 }

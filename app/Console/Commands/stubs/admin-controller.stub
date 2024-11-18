@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Core\AbstractCRUDController;
+use App\Http\Requests\Admin\{{ request }};
+use App\Models\{{ model }};
+use App\Repository\{{ model }}Repository;
+
+class {{ controller }} extends AbstractCRUDController
+{
+    protected string $viewFolder = '{{ viewFolder }}';
+    protected string $request = {{ request }}::class;
+
+    public function __construct(
+        private readonly {{ model }}Repository $repository,
+    ) {
+        $this->modelClass = new {{ model }}();
+        parent::__construct($repository);
+    }
+
+    public function createViewData(): array
+    {
+        return [
+            // Добавьте необходимые данные
+        ];
+    }
+
+    public function editViewData(): array
+    {
+        return $this->createViewData();
+    }
+
+    public function indexViewData(): array
+    {
+        return $this->createViewData();
+    }
+}

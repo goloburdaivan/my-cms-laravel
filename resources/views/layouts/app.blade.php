@@ -65,6 +65,11 @@
                             <i class="fas fa-list-alt"></i> Категории
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.attributes.index') }}">
+                            <i class="fas fa-list-alt"></i> Аттрибуты
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>

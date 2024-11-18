@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
@@ -27,6 +28,8 @@ Route::middleware('auth:admin')->group(function () {
             ->name('products.update');
         Route::delete('/products/{product}', 'destroy')
             ->name('products.destroy');
+        Route::post('/products/{product}/attributes', 'updateAttributes')
+            ->name('products.updateAttributes');
     });
 
     Route::controller(CategoryController::class)->group(function () {
@@ -44,6 +47,23 @@ Route::middleware('auth:admin')->group(function () {
             ->name('categories.update');
         Route::delete('/categories/{category}', 'destroy')
             ->name('categories.destroy');
+    });
+
+    Route::controller(AttributeController::class)->group(function () {
+        Route::get('/attributes', 'index')
+            ->name('attributes.index');
+        Route::get('/attributes/create', 'create')
+            ->name('attributes.create');
+        Route::post('/attributes', 'store')
+            ->name('attributes.store');
+        Route::get('/attributes/{attribute}', 'show')
+            ->name('attributes.show');
+        Route::get('/attributes/{attribute}/edit', 'edit')
+            ->name('attributes.edit');
+        Route::put('/attributes/{attribute}', 'update')
+            ->name('attributes.update');
+        Route::delete('/attributes/{attribute}', 'destroy')
+            ->name('attributes.destroy');
     });
 
 });

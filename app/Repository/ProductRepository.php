@@ -14,4 +14,11 @@ class ProductRepository extends AbstractRepository
     {
         return Product::class;
     }
+
+    public function updateAttributes(int $id, array $attributes)
+    {
+        /** @var Product $product */
+        $product = $this->find($id);
+        $product->attributes()->sync($attributes);
+    }
 }

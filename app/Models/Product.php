@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Contracts\Filterable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model implements Filterable
@@ -28,9 +29,9 @@ class Product extends Model implements Filterable
         return $this->hasMany(ProductImage::class);
     }
 
-    public function attributes(): HasMany
+    public function attributes(): BelongsToMany
     {
-        return $this->hasMany(ProductAttribute::class);
+        return $this->belongsToMany(Attribute::class, 'product_attributes');
     }
 
     public function filters(): array
