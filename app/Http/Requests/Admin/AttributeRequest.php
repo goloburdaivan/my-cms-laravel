@@ -16,7 +16,6 @@ class AttributeRequest extends FormRequest
         return [
             'name' => ['string', 'required'],
             'value' => ['string', 'required'],
-
         ];
     }
 }

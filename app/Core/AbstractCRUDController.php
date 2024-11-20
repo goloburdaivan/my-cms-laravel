@@ -4,6 +4,7 @@ namespace App\Core;
 
 use App\Contracts\Filterable;
 use App\Repository\AbstractRepository;
+use App\Services\ImageStorageService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -93,8 +94,9 @@ abstract class AbstractCRUDController
 
     private function uploadPhoto(Request $request, Model $model): void
     {
+        $service = app(ImageStorageService::class);
         if ($request->hasFile('image')) {
-            $path = Storage::disk('public')->putFile($this->viewFolder, $request->file('image'));
+            $path = $service->upload('public', $this->viewFolder, $request->file('image'));
             $this->repository->update($model->id, [
                 'image' => $path,
             ]);

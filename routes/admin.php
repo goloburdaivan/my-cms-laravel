@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\Ajax\ImageUploaderController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
-use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:admin')->group(function () {
@@ -66,6 +67,11 @@ Route::middleware('auth:admin')->group(function () {
             ->name('attributes.destroy');
     });
 
+    Route::controller(ImageUploaderController::class)->group(function () {
+        Route::post('/uploadImage', 'upload')
+            ->name('images.upload')
+            ->withoutMiddleware(VerifyCsrfToken::class);
+    });
 });
 
 Route::controller(AuthController::class)->group(function () {
