@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Common;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UploadPhotoRequest extends FormRequest
+class PageBuilderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,8 @@ class UploadPhotoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'model' => ['string', 'required'],
-            'model_id' => ['integer', 'required'],
-            'image' => ['file', 'mimes:jpg,jpeg,png', 'max:1024', 'required'],
+            'html' => ['required', 'string'],
+            'css' => ['required', 'string'],
         ];
     }
 }

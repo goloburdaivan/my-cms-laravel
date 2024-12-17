@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Core\AbstractCRUDController;
+use App\DTO\CRUDRelationsDTO;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Http\Requests\Admin\UpdateProductAttributesRequest;
 use App\Models\Attribute;
@@ -47,5 +48,12 @@ class ProductController extends AbstractCRUDController
         $data = $request->validated();
         $this->repository->updateAttributes($id, $data['attributes']);
         return redirect()->route('admin.products.edit', $id);
+    }
+
+    protected function relations(): CRUDRelationsDTO
+    {
+        return new CRUDRelationsDTO(
+            ['category'],
+        );
     }
 }

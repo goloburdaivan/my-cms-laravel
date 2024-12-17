@@ -3,19 +3,19 @@
 namespace App\Core;
 
 use App\Contracts\Filterable;
+use App\DTO\CRUDRelationsDTO;
 use App\Repository\AbstractRepository;
 use App\Services\ImageStorageService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 abstract class AbstractCRUDController
 {
     use RequestCreationTrait;
 
-    protected Filterable $modelClass;
+    protected Model $modelClass;
     protected string $viewFolder;
     protected int $paginationLimit = 10;
 
@@ -30,10 +30,17 @@ abstract class AbstractCRUDController
 
     public function index(Request $request): View
     {
-        $query = $this->repository->filter($request);
+        $query = $this->repository->query();
+
+        if ($this->modelClass instanceof Filterable) {
+            $query = $this->repository->filter($request);
+        }
 
         $data = [
-            'items' => $query->paginate($this->paginationLimit),
+            'items' => $query
+                ->with($this->relations()->index)
+                ->paginate($this->paginationLimit)
+                ->withQueryString(),
         ];
 
         $data = array_merge($data, $this->indexViewData());
@@ -48,7 +55,7 @@ abstract class AbstractCRUDController
 
     public function show(int $id): View
     {
-        $item = $this->repository->find($id);
+        $item = $this->repository->find($id)->load($this->relations()->show);
         return view("{$this->viewFolder}.show", compact('item'));
     }
 
@@ -65,7 +72,7 @@ abstract class AbstractCRUDController
     public function edit(int $id): View
     {
         $data = [
-            'item' => $this->repository->find($id),
+            'item' => $this->repository->find($id)->load($this->relations()->edit),
         ];
 
         $data = array_merge($data, $this->editViewData());
@@ -101,5 +108,10 @@ abstract class AbstractCRUDController
                 'image' => $path,
             ]);
         }
+    }
+
+    protected function relations(): CRUDRelationsDTO
+    {
+        return new CRUDRelationsDTO();
     }
 }

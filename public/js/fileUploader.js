@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(uploadUrl, {
                 method: 'POST',
                 body: formData,
+                headers: {
+                    "Accept": 'application/json',
+                }
             });
 
             const data = await response.json();

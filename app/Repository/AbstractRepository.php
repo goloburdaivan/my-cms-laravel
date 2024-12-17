@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 abstract class AbstractRepository
 {
+    public function query(): Builder
+    {
+        $modelName = $this->model();
+
+        /** @var Model $model */
+        $model = new $modelName();
+        return $model::query();
+    }
+
     public function create(array $data): Model
     {
         $modelName = $this->model();

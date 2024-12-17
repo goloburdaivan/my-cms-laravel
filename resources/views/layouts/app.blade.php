@@ -70,6 +70,16 @@
                             <i class="fas fa-list-alt"></i> Аттрибуты
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.orders.index') }}">
+                            <i class="fas fa-list-alt"></i> Заказы
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.builders.main-page') }}">
+                            <i class="fas fa-list-alt"></i> Редактировать основную страничку
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>

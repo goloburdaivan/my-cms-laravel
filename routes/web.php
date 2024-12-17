@@ -1,13 +1,25 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 
-Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return "Test";
-    })
-        ->name('home');
+Route::controller(HomeController::class)->group(function () {
+   Route::get('/', 'index')
+       ->name('home');
+});
+
+Route::controller(\App\Http\Controllers\ProductController::class)->group(function () {
+    Route::get('/products/{slug}', 'index')
+        ->name('products.show');
+});
+
+
+Route::prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/add/{product}', [CartController::class, 'addToCart']);
+    Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 });
 
 Route::controller(AuthController::class)->group(function () {
