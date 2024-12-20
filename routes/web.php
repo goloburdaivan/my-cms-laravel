@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
@@ -10,7 +11,7 @@ Route::controller(HomeController::class)->group(function () {
        ->name('home');
 });
 
-Route::controller(\App\Http\Controllers\ProductController::class)->group(function () {
+Route::controller(ProductController::class)->group(function () {
     Route::get('/products/{slug}', 'index')
         ->name('products.show');
 });

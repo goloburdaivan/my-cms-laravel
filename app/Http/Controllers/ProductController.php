@@ -15,7 +15,7 @@ class ProductController extends Controller
 
     public function index(string $slug): View
     {
-        return \view('site.products.show', [
+        return view('site.products.show', [
             'product' => $this->productService->getDataForIndex($slug),
         ]);
     }

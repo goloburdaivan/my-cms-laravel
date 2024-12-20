@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="mb-3">
-                <img src="{{ $product->images->first()->url }}" alt="{{ $product->name }}" class="img-fluid" />
+                <img src="{{ $product->images->first()?->url }}" alt="{{ $product->name }}" class="img-fluid" />
             </div>
             <h3>{{ $product->name }}</h3>
             <p class="text-muted">{{ $product->article }}</p>
