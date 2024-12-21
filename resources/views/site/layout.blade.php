@@ -47,7 +47,7 @@
             <a href="/" class="text-white h3">Магазин</a>
         </div>
         <div>
-            <a href="/lk" class="text-white me-3">Личный кабинет</a>
+            <a href="/profile" class="text-white me-3">Личный кабинет</a>
             <a href="/cart" class="text-white">
                 <i class="fas fa-shopping-cart"></i> Корзина
             </a>
@@ -86,6 +86,7 @@
 <!-- Подключаем Bootstrap JS и Popper -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @stack('scripts')
 </body>
 </html>

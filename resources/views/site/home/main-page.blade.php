@@ -50,7 +50,12 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $product->name }}</h5>
                                     <p class="card-text">{{ $product->price }}$</p>
-                                    <button class="btn btn-primary add-to-cart" data-product-id="{{ $product->id }}">Добавить в корзину</button>
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-primary add-to-cart" data-product-id="{{ $product->id }}">Добавить в корзину</button>
+                                        @auth
+                                            <button class="btn btn-outline-secondary add-to-wishlist" data-product-id="{{ $product->id }}">В желаемое</button>
+                                        @endauth
+                                    </div>
                                 </div>
                             </a>
                         </div>
@@ -62,26 +67,44 @@
 @endsection
 
 @push('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            // При клике на кнопку "Добавить в корзину"
             $('.add-to-cart').on('click', function(e) {
                 e.preventDefault();
 
-                var productId = $(this).data('product-id'); // Идентификатор товара
+                var productId = $(this).data('product-id');
                 var quantity = 1;
 
                 $.ajax({
                     url: '/cart/add/' + productId,
                     type: 'POST',
                     data: {
-                        _token: '{{ csrf_token() }}', // Защита от CSRF
+                        _token: '{{ csrf_token() }}',
                         quantity: quantity,
                     },
                     success: function(response) {
                         $('.cart-count').text(response.cart_count);
                         $('#addToCartModal').modal('show');
+                    },
+                    error: function() {
+                        alert('Произошла ошибка. Попробуйте позже.');
+                    }
+                });
+            });
+
+            $('.add-to-wishlist').on('click', function(e) {
+                e.preventDefault();
+
+                var productId = $(this).data('product-id');
+
+                $.ajax({
+                    url: '/wishlist/add/' + productId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function(response) {
+                        alert('Товар добавлен в желаемое!');
                     },
                     error: function() {
                         alert('Произошла ошибка. Попробуйте позже.');

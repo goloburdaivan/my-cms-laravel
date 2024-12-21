@@ -17,14 +17,13 @@
 </head>
 <body>
 
-<!-- Хедер -->
 <header class="bg-dark text-white py-3">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
             <a href="/" class="text-white h3">Магазин</a>
         </div>
         <div>
-            <a href="/lk" class="text-white me-3">Личный кабинет</a>
+            <a href="/profile" class="text-white me-3">Личный кабинет</a>
             <a href="/cart" class="text-white">
                 <i class="fas fa-shopping-cart"></i> Корзина
             </a>
@@ -32,7 +31,6 @@
     </div>
 </header>
 
-<!-- Слайдер -->
 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
@@ -55,10 +53,8 @@
     </button>
 </div>
 
-<!-- Основной контент -->
 <div class="container mt-4">
     <div class="row">
-        <!-- Список категорий -->
         <div class="col-md-3">
             <h4>Категории</h4>
             <ul class="list-group">
@@ -70,7 +66,6 @@
             </ul>
         </div>
 
-        <!-- Список товаров -->
         <div class="col-md-9">
             <h4>Товары</h4>
             <div class="row">
@@ -93,14 +88,12 @@
     </div>
 </div>
 
-<!-- Футер -->
 <footer class="bg-dark text-white py-4">
     <div class="container text-center">
         <p>&copy; 2024 Интернет-магазин. Все права защищены.</p>
     </div>
 </footer>
 
-<!-- Подключаем Bootstrap JS и Popper -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>

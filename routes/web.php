@@ -3,6 +3,8 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\Auth\AuthController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 
@@ -21,6 +23,22 @@ Route::prefix('cart')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('cart.index');
     Route::post('/add/{product}', [CartController::class, 'addToCart']);
     Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/profile', 'index')
+            ->name('profile.index');
+        Route::put('/profile', 'update')
+            ->name('profile.update');
+    });
+
+    Route::controller(WishlistController::class)->group(function () {
+        Route::post('/wishlist/add/{product}', [WishlistController::class, 'addToWishlist'])
+            ->name('wishlist.add');
+        Route::delete('/wishlist/remove/{wishlist}', [WishlistController::class, 'removeFromWishlist'])
+            ->name('wishlist.remove');
+    });
 });
 
 Route::controller(AuthController::class)->group(function () {
