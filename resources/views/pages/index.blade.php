@@ -15,14 +15,14 @@
             </tr>
             </thead>
             <tbody>
-            @foreach ($items as $attribute)
+            @foreach ($items as $page)
                 <tr>
-                    <td>{{ $attribute->id }}</td>
-                    <td>{{ $attribute->slug }}</td>
+                    <td>{{ $page->id }}</td>
+                    <td>{{ $page->slug }}</td>
                     <td>
-                        <a href="{{ route('admin.pages.show', $attribute->id) }}" class="btn btn-info btn-sm">Просмотр</a>
-                        <a href="{{ route('admin.pages.edit', $attribute->id) }}" class="btn btn-warning btn-sm">Редактировать</a>
-                        <form action="{{ route('admin.pages.destroy', $attribute->id) }}" method="POST"
+                        <a href="{{ route('admin.pages.show', $page->id) }}" class="btn btn-info btn-sm">Просмотр</a>
+                        <a href="{{ route('admin.pages.edit', ['page' => $page->id]) }}" class="btn btn-warning btn-sm">Редактировать</a>
+                        <form action="{{ route('admin.pages.destroy', $page->id) }}" method="POST"
                               style="display:inline-block;">
                             @csrf
                             @method('DELETE')
@@ -40,6 +40,6 @@
             {{ $items->links() }}
         </div>
     @else
-        <p>Аттрибуты не найдены.</p>
+        <p>Страницы не найдены.</p>
     @endif
 @endsection

@@ -16,7 +16,7 @@ class PageRequest extends FormRequest
         return [
             'slug' => ['string', 'required'],
             'html' => ['string', 'required'],
-            'css' => ['string', 'required'],
+            'title' => ['string', 'required'],
         ];
     }
 }

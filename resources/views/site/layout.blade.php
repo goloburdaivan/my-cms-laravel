@@ -45,6 +45,16 @@
     <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
             <a href="/" class="text-white h3">Магазин</a>
+            <div style="padding-left: 20px" class="dropdown me-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="pagesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Страницы
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="pagesDropdown">
+                    @foreach(\App\Models\Page::query()->get() as $page)
+                        <li><a class="dropdown-item" href="{{ route('pages.show', ['slug' => $page->slug]) }}">{{ $page->title }}</a></li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
         <div>
             <a href="/profile" class="text-white me-3">Личный кабинет</a>
