@@ -24,7 +24,7 @@ class UploadPhotoRequest extends FormRequest
         return [
             'model' => ['string', 'required'],
             'model_id' => ['integer', 'required'],
-            'image' => ['file', 'mimes:jpg,jpeg,png', 'max:1024', 'required'],
+            'image' => ['file', 'mimes:jpg,jpeg,png', 'max:10240', 'required'],
         ];
     }
 }
