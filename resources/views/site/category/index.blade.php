@@ -3,6 +3,7 @@
 @section('title', 'Товары')
 
 @section('content')
+    <!-- Слайдер (карусель) -->
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -27,26 +28,42 @@
 
     <div class="row mt-4">
         <div class="col-md-3">
-            <h4>Категории</h4>
-            <ul class="list-group">
-                @foreach($categories as $category)
-                    <li class="list-group-item category-item">
-                        <a href="/categories/{{ $category->id }}" class="text-decoration-none">{{ $category->name }}</a>
-                        @if($category->children->isNotEmpty())
-                        <ul class="list-group ms-3 mt-2">
-                            @foreach($category->children as $subcategory)
-                                <li class="list-group-item">
-                                    <a href="/categories/{{ $subcategory->id }}" class="text-decoration-none">{{ $subcategory->name }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
-                        @endif
-                    </li>
-                @endforeach
-            </ul>
+            <h4>Фильтры</h4>
+            <form method="GET" action="{{ route('categories.show', ['category' => $category->id]) }}">
+                <div class="mb-3">
+                    <label for="searchName" class="form-label">Поиск по названию</label>
+                    <input type="text" id="searchName" name="name" class="form-control" placeholder="Введите название">
+                </div>
+                <div class="mb-3">
+                    <label for="searchSku" class="form-label">Поиск по артикулу</label>
+                    <input type="text" id="searchSku" name="article" class="form-control" placeholder="Введите артикул">
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Категории</label>
+                    <select id="category" name="category_id" class="form-select">
+                        <option value="">Все категории</option>
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="priceRange" class="form-label">Ценовой диапазон</label>
+                    <input type="number" name="min_price" class="form-control mb-2" placeholder="Мин. цена">
+                    <input type="number" name="max_price" class="form-control" placeholder="Макс. цена">
+                </div>
+                <div class="mb-3">
+                    <label for="sortBy" class="form-label">Сортировать по</label>
+                    <select id="sortBy" name="sort" class="form-select">
+                        <option value="price_asc">Цена: по возрастанию</option>
+                        <option value="price_desc">Цена: по убыванию</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Применить</button>
+            </form>
         </div>
 
-        <!-- Список товаров -->
         <div class="col-md-9">
             <h4>Товары</h4>
             <div class="row">

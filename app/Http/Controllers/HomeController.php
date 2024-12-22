@@ -12,7 +12,9 @@ class HomeController extends Controller
     {
         return view('site.home.main-page', [
             'products' => Product::query()->take(10)->get(),
-            'categories' => Category::query()->where('parent_id', null)->get(),
+            'categories' => Category::query()
+                ->with(['children'])
+                ->where('parent_id', null)->get(),
         ]);
     }
 }

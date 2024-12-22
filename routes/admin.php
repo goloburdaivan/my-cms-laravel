@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MainPageBuilderController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,7 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::resource('products', ProductController::class);
     Route::resource('orders', OrderController::class);
+    Route::resource('pages', PageController::class);
 
     Route::controller(ProductController::class)->group(function () {
         Route::post('/products/{product}/attributes', 'updateAttributes')

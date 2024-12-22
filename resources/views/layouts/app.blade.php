@@ -76,8 +76,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.builders.main-page') }}">
-                            <i class="fas fa-list-alt"></i> Редактировать основную страничку
+                        <a class="nav-link" href="{{ route('admin.pages.index') }}">
+                            <i class="fas fa-list-alt"></i> Страницы
                         </a>
                     </li>
                 </ul>
