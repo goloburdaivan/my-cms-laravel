@@ -54,7 +54,7 @@
                     <div class="col-md-4">
                         <div class="card product-card">
                             <a href="{{ route('products.show', ['slug' => $product->slug]) }}" class="text-decoration-none">
-                                <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="{{ $product->name }}">
+                                <img src="{{ $product->images->first()?->url }}" class="card-img-top" alt="{{ $product->name }}">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $product->name }}</h5>
                                     <p class="card-text">{{ $product->price }}$</p>
